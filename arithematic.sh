@@ -15,3 +15,9 @@ do
 done
 echo ${arr[@]}
 echo ${!arr[@]}
+for ((i=0;i<=${#arr[@]};i++))
+do
+  a[$i]=${arr[$i]}
+done
+echo ${a[@]}
+
