@@ -7,31 +7,38 @@ result2=$(($(($a*$b))+$c))
 result3=$(($c+$(($a/$b))))
 result4=$(($(($a%$b))+$c))
 declare -A arr
-arr[1]=$result1
-arr[2]=$result2
-arr[3]=$result3
-arr[4]=$result4
+arr[0]=$result1
+arr[1]=$result2
+arr[2]=$result3
+arr[3]=$result4
 echo ${arr[@]}
 echo ${!arr[@]}
-for ((i=1;i<${#arr[@]};i++))
+for ((i=0;i<${#arr[@]};i++))
 do
   a[$i]=${arr[$i]}
 done
-echo ${a[@]}
-echo ${!a[@]}
+echo  ${a[@]}
+echo "it is index ${!a[@]}"
 temp=0
-for ((i=0;i<=${#a[@]};i++))
+echo "leng ${#a[@]}"
+for ((i=0;i<${#a[@]};i++))
 do
-	for (( j=0;j<=$((${#a[@]}-$i));j++))
+	for (( j=$(($i+1));j<${#a[@]};j++))
 	do
-         echo ${a[j]}
-         echo ${a[j+1]}
-		if [[ ${a[$j]} < ${a[$(($j+1))]} ]]
+		if [ ${a[i]} -lt ${a[j]} ]
 		then
-			temp=${a[$j]}
-			a[$j]=${a[$(($j+1))]}
-			a[$(($j+1))]=$temp
+			temp=${a[i]}
+			a[i]=${a[j]}
+			a[j]=$temp
 		fi
 	done
 done
 echo ${a[@]}
+echo ${!a[@]}
+j=0
+for ((i=$((${#a[@]}-1));i>=0;i--))
+do
+	arr[$j]=${a[$i]}
+	((j++))
+done
+echo ${arr[@]}
